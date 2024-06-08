@@ -1,4 +1,4 @@
-const supplierService = require('../services/supplierService');
+const supplierService = require('../services/SupplierService');
 const { Respond } = require('../helpers/helpers');
 
 class SupplierController {

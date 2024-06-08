@@ -1,6 +1,6 @@
 const { Product } = require('../models/index')
-const supplierService = require('./supplierService');
-const categoryService = require('./categoryService');
+const supplierService = require('./SupplierService');
+const categoryService = require('./CategoryService');
 
 class ProductService {
     async createProduct(data) {

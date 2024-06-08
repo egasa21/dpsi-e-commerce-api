@@ -1,4 +1,4 @@
-const customerService = require('../services/customerService');
+const customerService = require('../services/CustomerService');
 const { Respond } = require('../helpers/helpers')
 
 class CustomerController {
