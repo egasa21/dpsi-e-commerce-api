@@ -1,9 +1,11 @@
-const { Supplier } = require('../models/index');
-
 class SupplierService {
+    constructor(supplierModel) {
+        this.supplierModel = supplierModel;
+    }
+
     async createSupplier(data) {
         try {
-            const supplier = await Supplier.create(data);
+            const supplier = await this.supplierModel.create(data);
             return supplier;
         } catch (error) {
             throw error;
@@ -12,13 +14,12 @@ class SupplierService {
 
     async findById(id) {
         try {
-            const supplier = await Supplier.findByPk(id);
+            const supplier = await this.supplierModel.findByPk(id);
             return supplier;
         } catch (error) {
             throw error;
         }
     }
-
 }
 
-module.exports = new SupplierService();
+module.exports = SupplierService;

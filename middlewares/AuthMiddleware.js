@@ -1,25 +1,32 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../models/index')
-require('dotenv').config()
+const { User } = require('../models');
+require('dotenv').config();
 
 class AuthMiddleware {
     constructor() {
-        this.secret = process.env.JWT_SECRET
+        this.secret = process.env.JWT_SECRET;
     }
 
     async verifyToken(req, res, next) {
-        const token = req.headers['authorization'];
-        if (!token) {
-            return res.status(403).send({ message: 'No token provided!' });
-        }
-
         try {
+            const authHeader = req.headers.authorization;
+            if (!authHeader) {
+                return res.status(403).send({ message: 'No token provided!' });
+            }
+
+            const token = authHeader.split(" ")[1];
+            if (!token) {
+                return res.status(403).send({ message: 'No token provided!' });
+            }
+
             const decoded = jwt.verify(token, this.secret);
             req.userId = decoded.id;
+            next();
         } catch (err) {
             return res.status(401).send({ message: 'Unauthorized!' });
         }
     }
+
 
     async verifyUser(req, res, next) {
         try {
@@ -51,5 +58,4 @@ class AuthMiddleware {
     }
 }
 
-
-module.exports = new AuthMiddleware()
+module.exports = new AuthMiddleware();

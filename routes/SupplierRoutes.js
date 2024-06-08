@@ -1,7 +1,12 @@
 const express = require('express');
-const supplierController = require('../controllers/SupplierController');
+const SupplierController = require('../controllers/SupplierController');
+const SupplierService = require('../services/SupplierService');
 const router = express.Router();
+const { Supplier } = require('../models/index');
 
-router.post('/suppliers/', supplierController.createSupplier);
+const supplierService = new SupplierService(Supplier);
+const supplierController = new SupplierController(supplierService);
+
+router.post('/suppliers/', supplierController.createSupplier.bind(supplierController));
 
 module.exports = router;

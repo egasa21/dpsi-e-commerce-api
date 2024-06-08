@@ -1,19 +1,16 @@
-const authService = require('../services/AuthService');
-const { Respond } = require('../helpers/helpers');
-
 class AuthController {
-    constructor() {
-        this.authService = authService
+    constructor(authService, respond) {
+        this.authService = authService;
+        this.respond = respond;
     }
 
     async register(req, res) {
         try {
             const data = req.body;
-            const user = await this.authService.register(data)
-
-            Respond(res, user, true, "User created successfully", "", 201);
+            const user = await this.authService.register(data);
+            this.respond(res, user, true, "User created successfully", "", 201);
         } catch (error) {
-            Respond(res, null, false, error.message, "BAD_REQUEST", 400);
+            this.respond(res, null, false, error.message, "BAD_REQUEST", 400);
         }
     }
 
@@ -21,12 +18,11 @@ class AuthController {
         try {
             const { email, password } = req.body;
             const token = await this.authService.login(email, password);
-
-            Respond(res, { token }, true, "Login successful", "", 200);
+            this.respond(res, { token }, true, "Login successful", "", 200);
         } catch (error) {
-            Respond(res, null, false, error.message, "BAD_REQUEST", 400);
+            this.respond(res, null, false, error.message, "BAD_REQUEST", 400);
         }
     }
 }
 
-module.exports = new AuthController();
+module.exports = AuthController;

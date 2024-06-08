@@ -1,11 +1,14 @@
-const productService = require('../services/ProductService')
 const { Respond } = require('../helpers/helpers');
 
 class ProductController {
+    constructor(productService) {
+        this.productService = productService;
+    }
+
     async createProduct(req, res) {
         try {
             const data = req.body;
-            const product = await productService.createProduct(data);
+            const product = await this.productService.createProduct(data);
             Respond(res, product, true, "Product created successfully", "", 201);
         } catch (error) {
             if (error.message === 'Supplier not found' || error.message === 'Category not found') {
@@ -15,8 +18,6 @@ class ProductController {
             }
         }
     }
-
-
 }
 
-module.exports = new ProductController();
+module.exports = ProductController;
