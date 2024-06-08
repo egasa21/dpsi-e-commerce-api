@@ -1,21 +1,22 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 let cors = require('cors')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 let customerRouter = require('./routes/CustomerRoutes');
 let productRouter = require('./routes/ProductRoutes');
 let categoryRouter = require('./routes/CategoryRoutes');
 let supplierRouter = require('./routes/SupplierRoutes');
 let authRouter = require('./routes/AuthRoutes');
+let employeeRouter = require('./routes/EmployeeRoutes');
 
 const db = require('./models');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,6 +35,7 @@ app.use('/api', customerRouter);
 app.use('/api', categoryRouter);
 app.use('/api', supplierRouter);
 app.use('/api', productRouter);
+app.use('/api', employeeRouter);
 app.use('/api/auth', authRouter);
 
 
