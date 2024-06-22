@@ -18,7 +18,6 @@ let orderDetailRouter = require('./routes/OrderDetailRoutes');
 let shipperRouter = require('./routes/ShipperRoutes');
 
 const db = require('./models');
-const {or} = require("sequelize");
 
 const app = express();
 
