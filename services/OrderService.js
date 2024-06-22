@@ -21,6 +21,30 @@ class OrderService {
         }
     }
 
+    async findOrderById(id) {
+        try {
+            const order = await this.orderModel.findByPk(id, {
+                include: [
+                    { model: this.customerModel },
+                    { model: this.employeeModel },
+                    { model: this.shipperModel }
+                ]
+            });
+            return order;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async createOrder(data) {
+        try {
+            const newOrder = await this.orderModel.create(data);
+            return newOrder;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async updateOrder(id, data) {
         try {
             const order = await this.orderModel.findByPk(id);

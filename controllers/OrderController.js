@@ -14,6 +14,30 @@ class OrderController {
         }
     }
 
+    async getOrderById(req, res) {
+        try {
+            const orderId = req.params.id;
+            const order = await this.orderService.findOrderById(orderId);
+            if (!order) {
+                Respond(res, null, false, "Order not found", "NOT_FOUND", 404);
+            } else {
+                Respond(res, order, true, "Order retrieved successfully", "", 200);
+            }
+        } catch (error) {
+            Respond(res, null, false, error.message, "INTERNAL_SERVER_ERROR", 500);
+        }
+    }
+
+    async createOrder(req, res) {
+        try {
+            const data = req.body;
+            const newOrder = await this.orderService.createOrder(data);
+            Respond(res, newOrder, true, "Order created successfully", "", 201);
+        } catch (error) {
+            Respond(res, null, false, error.message, "INTERNAL_SERVER_ERROR", 500);
+        }
+    }
+
     async updateOrder(req, res) {
         try {
             const orderId = req.params.id;
